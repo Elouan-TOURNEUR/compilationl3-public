@@ -2,12 +2,42 @@ Package sc;
 
 Helpers
 
-lettre = [['a' .. 'z'] + ['A' .. 'Z']];
+lettres = [['a' .. 'z'] + ['A' .. 'Z']]+;
+
+
 
 Tokens
 
+id = [['a' .. 'z'] + ['a' .. 'z']]+;
+nbr = ['1' .. '9']+;
+plus = '+';
+minus = '-';
+mult = '*';
+div = '/';
+inf = '<';
+egal = '=';
+non = '!';
+et = '&';
+ou = '|';
+l_par = '(';
+r_par = ')';
+l_acc = '{';
+r_acc = '}';
+l_croc = '[';
+r_croc = ']';
 espaces = (' ' | 13 | 10)+;
+
 commentaire= '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
+pvir = ';';
+vir = ',';
+ret = 'retour';
+si = 'si';
+alors = 'alors';
+sinon = 'sinon';
+tantq = 'tantque';
+faire = 'faire';
+entier = 'entier';
+
 
 Ignored Tokens
 
@@ -15,5 +45,65 @@ espaces, commentaire;
 
 Productions
 
-programme = optdecvar listedecfonc ;
+prog = {p} ldvo ldf ;
+ldf =
+    {l} df ldf |
+    {vide};
+df = {df} id l_par ldvo r_par ldvo2 ibloc ;
+
+ldvo2 =
+    {vide}|
+    {l} ldvo pvir ldvo2 ;
+
+ldvo =
+    {vide}|
+    {l} ldv ;
+ldv =
+    {l} dv vir ldv |
+    {dv} dv ;
+dv = {var} entier var ;
+var =
+    {id} id |
+    {fct} id l_croc e r_croc ;
+
+e = {ou} e ou e1 |
+    {et} e1 ;
+e1 = {et} e1 et e2 |
+    {egal} e2 ;
+e2 = {egal} e2 egal e3 |
+    {inf} e2 inf e3 |
+    {plus} e3 ;
+e3 = {plus} e3 plus e4 |
+    {minus} e3 minus e4 |
+    {mult} e4 ;
+e4 = {mult} e4 mult e5 |
+    {div} e4 div e5 |
+    {non} e5 ;
+e5 = {non} non e5 |
+    {par} e6 ;
+e6 = {par} l_par e r_par |
+    {nbr} nbr |
+    {app} app |
+    {var} var ;
+
+
+i = {iaff} iaff |
+    {isi} isi |
+    {itq} itq |
+    {iapp} iapp |
+    {ibloc} ibloc |
+    {iret} iret ;
+iaff = {laff} id egal e pvir |
+    {aff} id egal app pvir ;
+iapp = {app} app ;
+isi = {clos} si e alors ibloc sinon ibloc2 |
+    {open} si e alors ibloc ;
+itq = {loop} tantq e faire ibloc ;
+iret = {ret} ret e ;
+ibloc =  {bloc} l_acc li r_acc ;
+ibloc2 =  {bloc} l_acc li r_acc ;
+
+li  =  {i} i li |
+    {vide};
+app = {fct} id l_par e r_par ;
 
