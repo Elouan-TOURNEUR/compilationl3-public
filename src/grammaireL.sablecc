@@ -2,14 +2,12 @@ Package sc;
 
 Helpers
 
-lettres = [['a' .. 'z'] + ['A' .. 'Z']]+;
-
+blanc = ( ' ' | 13 | 10 )*;
 
 
 Tokens
 
-id = [['a' .. 'z'] + ['a' .. 'z']]+;
-nbr = ['1' .. '9']+;
+nbr = '-'? ['0' .. '9']+;
 plus = '+';
 minus = '-';
 mult = '*';
@@ -25,19 +23,19 @@ l_acc = '{';
 r_acc = '}';
 l_croc = '[';
 r_croc = ']';
-espaces = (' ' | 13 | 10)+;
-
-commentaire= '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
 pvir = ';';
 vir = ',';
 ret = 'retour';
-si = 'si';
-alors = 'alors';
+si = 'si ';
+alors = ' alors';
 sinon = 'sinon';
-tantq = 'tantque';
+tantq = 'tantque ';
 faire = 'faire';
-entier = 'entier';
+entier = 'entier ';
+id = (['a' .. 'z']+ ['A' .. 'Z']* )+;
 
+espaces = ( ' ' | 13 | 10 )*;
+commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
 
 Ignored Tokens
 
@@ -45,7 +43,7 @@ espaces, commentaire;
 
 Productions
 
-prog = {p} ldvo ldf ;
+prog = {p} ldvo2 ldf ;
 ldf =
     {l} df ldf |
     {vide};
@@ -64,7 +62,11 @@ ldv =
 dv = {var} entier var ;
 var =
     {id} id |
-    {fct} id l_croc e r_croc ;
+    {tab} id l_croc e r_croc ;
+
+le = {lexp} e vir le |
+     {exp} e |
+     {vide};
 
 e = {ou} e ou e1 |
     {et} e1 ;
@@ -93,17 +95,16 @@ i = {iaff} iaff |
     {iapp} iapp |
     {ibloc} ibloc |
     {iret} iret ;
-iaff = {laff} id egal e pvir |
-    {aff} id egal app pvir ;
-iapp = {app} app ;
-isi = {clos} si e alors ibloc sinon ibloc2 |
+iaff = {laff} var egal e pvir ;
+
+iapp = {app} app pvir ;
+isi = {clos} si e alors [bloc1]:ibloc sinon [bloc2]:ibloc |
     {open} si e alors ibloc ;
 itq = {loop} tantq e faire ibloc ;
-iret = {ret} ret e ;
+iret = {ret} ret e pvir ;
 ibloc =  {bloc} l_acc li r_acc ;
-ibloc2 =  {bloc} l_acc li r_acc ;
 
 li  =  {i} i li |
-    {vide};
-app = {fct} id l_par e r_par ;
+       {vide} ;
+app = {fct} id l_par le r_par ;
 
