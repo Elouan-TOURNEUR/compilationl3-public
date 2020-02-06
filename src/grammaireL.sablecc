@@ -7,7 +7,7 @@ blanc = ( ' ' | 13 | 10 )*;
 
 Tokens
 
-nbr = '-'? ['0' .. '9']+;
+nbr = ('-')? ['0' .. '9']+;
 plus = '+';
 minus = '-';
 mult = '*';
@@ -31,6 +31,8 @@ alors = ' alors';
 sinon = 'sinon';
 tantq = 'tantque ';
 faire = 'faire';
+ecrire = 'ecrire';
+lire = 'lire';
 entier = 'entier ';
 id = (['a' .. 'z']+ ['A' .. 'Z']* )+;
 
@@ -59,10 +61,11 @@ ldvo =
 ldv =
     {l} dv vir ldv |
     {dv} dv ;
-dv = {var} entier var ;
-var =
+dv = {var} entier dvar ;
+
+dvar =
     {id} id |
-    {tab} id l_croc e r_croc ;
+    {tab} id l_croc nbr r_croc ;
 
 le = {lexp} e vir le |
      {exp} e |
@@ -86,15 +89,18 @@ e5 = {non} non e5 |
 e6 = {par} l_par e r_par |
     {nbr} nbr |
     {app} app |
+	{lire} elire |
     {var} var ;
 
+elire = {lire} lire l_par r_par ;
 
 i = {iaff} iaff |
     {isi} isi |
     {itq} itq |
-    {iapp} iapp |
     {ibloc} ibloc |
-    {iret} iret ;
+    {iret} iret |
+	{iecr} iecr |
+	{iapp} iapp ;
 iaff = {laff} var egal e pvir ;
 
 iapp = {app} app pvir ;
@@ -102,7 +108,12 @@ isi = {clos} si e alors [bloc1]:ibloc sinon [bloc2]:ibloc |
     {open} si e alors ibloc ;
 itq = {loop} tantq e faire ibloc ;
 iret = {ret} ret e pvir ;
+iecr = {ecr} ecrire l_par e r_par pvir ;
 ibloc =  {bloc} l_acc li r_acc ;
+
+var =
+    {id} id |
+    {tab} id l_croc e r_croc ;
 
 li  =  {i} i li |
        {vide} ;

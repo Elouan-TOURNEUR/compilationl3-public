@@ -2,10 +2,16 @@ package sa ;
 
 
 import sc.analysis.DepthFirstAdapter;
+import sc.node.*;
 
 
 public class Sc2sa extends DepthFirstAdapter {
     private SaNode returnValue;
+
+
+	public SaNode getRoot(){
+		return this.returnValue;
+	}
 
     @Override
     public void caseAPProg(APProg node)
@@ -50,6 +56,14 @@ public class Sc2sa extends DepthFirstAdapter {
         
         this.returnValue = new SaLDec(fonction, listeFonctions);
     }
+	
+	@Override
+    public void caseAVideLdf(AVideLdf node)
+    {
+        inAVideLdf(node);
+		this.returnValue = null;
+        outAVideLdf(node);
+    }
 
     
     @Override
@@ -63,8 +77,8 @@ public class Sc2sa extends DepthFirstAdapter {
         inADfDf(node);
         if(node.getId() != null)
         {
+			id = node.getId().getText();
             node.getId().apply(this);
-            id = (String) this.returnValue;
         }
         if(node.getLPar() != null)
         {
@@ -91,20 +105,28 @@ public class Sc2sa extends DepthFirstAdapter {
         }
         outADfDf(node);
 		
-        this.returnValue = new SaLDec(id, parametres, variables, iBloc);
+        this.returnValue = new SaDecFonc(id, parametres, variables, iBloc);
+    }
+	
+	@Override
+    public void caseAVideLdvo2(AVideLdvo2 node)
+    {
+        inAVideLdvo2(node);
+		//this.returnValue = null;
+        outAVideLdvo2(node);
     }
 
     @Override
     public void caseALLdvo2(ALLdvo2 node)
     {
-        SaDecVar declarations = null;
+        SaLDec declarations = null;
         SaLDec listeDeclarations = null;
         
         inALLdvo2(node);
         if(node.getLdvo() != null)
         {
             node.getLdvo().apply(this);
-			declarations = (SaDecVar) this.returnValue;
+			declarations = (SaLDec) this.returnValue;
         }
         if(node.getPvir() != null)
         {
@@ -117,7 +139,20 @@ public class Sc2sa extends DepthFirstAdapter {
         }
         outALLdvo2(node);
 		
-		this.returnValue = new SaLDec(delcarations, listeDeclarations);
+		
+		for(int i = 0; i < declarations.length()-1; i++){
+			listeDeclarations = new SaLDec(declarations.getTete(), listeDeclarations);
+			declarations = declarations.getQueue();
+		}
+		this.returnValue = listeDeclarations;
+    }
+	
+	@Override
+    public void caseAVideLdvo(AVideLdvo node)
+    {
+        inAVideLdvo(node);
+		this.returnValue = null;
+        outAVideLdvo(node);
     }
 
     @Override
@@ -159,7 +194,7 @@ public class Sc2sa extends DepthFirstAdapter {
         }
         outALLdv(node);
 		
-		this.returnValue = new SaLDec(delcaration, listeDeclarations);
+		this.returnValue = new SaLDec(declaration, listeDeclarations);
     }
 
     @Override
@@ -175,7 +210,7 @@ public class Sc2sa extends DepthFirstAdapter {
         }
         outADvLdv(node);
 		
-		this.returnValue = declaration;
+		this.returnValue = new SaLDec(declaration, null);
     }
 
     @Override
@@ -188,14 +223,60 @@ public class Sc2sa extends DepthFirstAdapter {
         {
             node.getEntier().apply(this);
         }
-        if(node.getVar() != null)
+        if(node.getDvar() != null)
         {
-            node.getVar().apply(this);
+            node.getDvar().apply(this);
 			declaration = (SaDec) this.returnValue;
         }
         outAVarDv(node);
 		
 		this.returnValue = declaration;
+    }
+	
+	@Override
+    public void caseAIdDvar(AIdDvar node)
+    {
+		String id = null;
+		
+        inAIdDvar(node);
+        if(node.getId() != null)
+        {
+			id = node.getId().getText();
+            node.getId().apply(this);
+        }
+        outAIdDvar(node);
+		
+		this.returnValue = new SaDecVar(id);
+    }
+
+    @Override
+    public void caseATabDvar(ATabDvar node)
+    {
+		String id = null;
+		Integer taille = null;
+		
+        inATabDvar(node);
+        if(node.getId() != null)
+        {
+			id = node.getId().getText();
+            node.getId().apply(this);
+        }
+        if(node.getLCroc() != null)
+        {
+            node.getLCroc().apply(this);
+        }
+        if(node.getNbr() != null)
+        {
+			taille = Integer.parseInt(node.getNbr().getText());
+            node.getNbr().apply(this);
+        }
+        if(node.getRCroc() != null)
+        {
+            node.getRCroc().apply(this);
+        }
+        outATabDvar(node);
+		
+		this.returnValue = new SaDecTab(id, taille);
     }
 
     @Override
@@ -206,25 +287,25 @@ public class Sc2sa extends DepthFirstAdapter {
         inAIdVar(node);
         if(node.getId() != null)
         {
+			id = node.getId().getText();
             node.getId().apply(this);
-			id = (String) this.returnValue;
         }
         outAIdVar(node);
 		
-		this.returnValue = new SaDecVar(id);
+		this.returnValue = new SaVarSimple(id);
     }
 
     @Override
     public void caseATabVar(ATabVar node)
     {
 		String id = null;
-		Integer taille = null;
+		SaExp indice = null;
 		
         inATabVar(node);
         if(node.getId() != null)
         {
+			id = node.getId().getText();
             node.getId().apply(this);
-			id = (String) this.returnValue;
         }
         if(node.getLCroc() != null)
         {
@@ -233,8 +314,7 @@ public class Sc2sa extends DepthFirstAdapter {
         if(node.getE() != null)
         {
             node.getE().apply(this);
-			// On suppose que l'on met toujours un nombre pour la taille d'un tableau
-			taille = (Integer) this.returnValue;
+			indice = (SaExp) this.returnValue;
         }
         if(node.getRCroc() != null)
         {
@@ -242,7 +322,7 @@ public class Sc2sa extends DepthFirstAdapter {
         }
         outATabVar(node);
 		
-		this.returnValue = new SaDecTab(id, taille);
+		this.returnValue = new SaVarIndicee(id, indice);
     }
 
     @Override
@@ -284,7 +364,15 @@ public class Sc2sa extends DepthFirstAdapter {
         }
         outAExpLe(node);
 		
-		this.returnValue = expression;
+		this.returnValue = new SaLExp(expression, null);
+    }
+	
+	@Override
+    public void caseAVideLe(AVideLe node)
+    {
+        inAVideLe(node);
+		this.returnValue = null;
+        outAVideLe(node);
     }
 
     @Override
@@ -643,8 +731,8 @@ public class Sc2sa extends DepthFirstAdapter {
         inANbrE6(node);
         if(node.getNbr() != null)
         {
+			number = Integer.parseInt(node.getNbr().getText());
             node.getNbr().apply(this);
-			number = (Integer) this.returnValue;
         }
         outANbrE6(node);
 		
@@ -681,6 +769,42 @@ public class Sc2sa extends DepthFirstAdapter {
         outAVarE6(node);
 		
 		this.returnValue = new SaExpVar(variable);
+    }
+	
+	@Override
+    public void caseALireE6(ALireE6 node)
+    {
+		SaExpLire lire = null;
+        inALireE6(node);
+        if(node.getElire() != null)
+        {
+            node.getElire().apply(this);
+			lire = (SaExpLire)this.returnValue;
+        }
+        outALireE6(node);
+		
+		this.returnValue = lire;
+    }
+	
+	@Override
+    public void caseALireElire(ALireElire node)
+    {
+        inALireElire(node);
+        if(node.getLire() != null)
+        {
+            node.getLire().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        outALireElire(node);
+		
+		this.returnValue = new SaExpLire();
     }
 
     @Override
@@ -954,10 +1078,11 @@ public class Sc2sa extends DepthFirstAdapter {
 		this.returnValue = new SaInstRetour(expression);
     }
 	
-	/******************/
     @Override
     public void caseABlocIbloc(ABlocIbloc node)
     {
+		SaLInst instructions = null;
+		
         inABlocIbloc(node);
         if(node.getLAcc() != null)
         {
@@ -966,35 +1091,89 @@ public class Sc2sa extends DepthFirstAdapter {
         if(node.getLi() != null)
         {
             node.getLi().apply(this);
+			instructions = (SaLInst) this.returnValue;
         }
         if(node.getRAcc() != null)
         {
             node.getRAcc().apply(this);
         }
         outABlocIbloc(node);
+		
+		this.returnValue = new SaInstBloc(instructions);
     }
 
     @Override
     public void caseAILi(AILi node)
     {
+		SaInst instruction = null;
+		SaLInst instructions = null;
+		
         inAILi(node);
         if(node.getI() != null)
         {
             node.getI().apply(this);
+			instruction = (SaInst)this.returnValue;
         }
         if(node.getLi() != null)
         {
             node.getLi().apply(this);
+			instructions = (SaLInst)this.returnValue;
         }
         outAILi(node);
+		
+		this.returnValue = new SaLInst(instruction, instructions);
+    }
+	
+	@Override
+    public void caseAVideLi(AVideLi node)
+    {
+        inAVideLi(node);
+		this.returnValue = null;
+        outAVideLi(node);
+    }
+	
+	@Override
+    public void caseAEcrIecr(AEcrIecr node)
+    {
+		SaExp expression = null;
+		
+        inAEcrIecr(node);
+        if(node.getEcrire() != null)
+        {
+            node.getEcrire().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getE() != null)
+        {
+            node.getE().apply(this);
+			expression = (SaExp)this.returnValue;
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        if(node.getPvir() != null)
+        {
+            node.getPvir().apply(this);
+        }
+        outAEcrIecr(node);
+		
+		this.returnValue = new SaInstEcriture(expression);
     }
 
     @Override
     public void caseAFctApp(AFctApp node)
     {
+		String id = null;
+		SaLExp arguments = null;
+		
         inAFctApp(node);
         if(node.getId() != null)
         {
+			id = node.getId().getText();
             node.getId().apply(this);
         }
         if(node.getLPar() != null)
@@ -1004,12 +1183,15 @@ public class Sc2sa extends DepthFirstAdapter {
         if(node.getLe() != null)
         {
             node.getLe().apply(this);
+			arguments = (SaLExp)this.returnValue;
         }
         if(node.getRPar() != null)
         {
             node.getRPar().apply(this);
         }
         outAFctApp(node);
+		
+		this.returnValue = new SaAppel(id, arguments);
     }
 
 }
