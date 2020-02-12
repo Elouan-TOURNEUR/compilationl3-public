@@ -292,9 +292,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAVarDv(AVarDv node)
     {
         inAVarDv(node);
-        if(node.getVar() != null)
+        if(node.getDvar() != null)
         {
-            node.getVar().apply(this);
+            node.getDvar().apply(this);
         }
         if(node.getEntier() != null)
         {
@@ -303,48 +303,48 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAVarDv(node);
     }
 
-    public void inAIdVar(AIdVar node)
+    public void inAIdDvar(AIdDvar node)
     {
         defaultIn(node);
     }
 
-    public void outAIdVar(AIdVar node)
+    public void outAIdDvar(AIdDvar node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAIdVar(AIdVar node)
+    public void caseAIdDvar(AIdDvar node)
     {
-        inAIdVar(node);
+        inAIdDvar(node);
         if(node.getId() != null)
         {
             node.getId().apply(this);
         }
-        outAIdVar(node);
+        outAIdDvar(node);
     }
 
-    public void inATabVar(ATabVar node)
+    public void inATabDvar(ATabDvar node)
     {
         defaultIn(node);
     }
 
-    public void outATabVar(ATabVar node)
+    public void outATabDvar(ATabDvar node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseATabVar(ATabVar node)
+    public void caseATabDvar(ATabDvar node)
     {
-        inATabVar(node);
+        inATabDvar(node);
         if(node.getRCroc() != null)
         {
             node.getRCroc().apply(this);
         }
-        if(node.getE() != null)
+        if(node.getNbr() != null)
         {
-            node.getE().apply(this);
+            node.getNbr().apply(this);
         }
         if(node.getLCroc() != null)
         {
@@ -354,7 +354,7 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getId().apply(this);
         }
-        outATabVar(node);
+        outATabDvar(node);
     }
 
     public void inALexpLe(ALexpLe node)
@@ -878,6 +878,27 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAAppE6(node);
     }
 
+    public void inALireE6(ALireE6 node)
+    {
+        defaultIn(node);
+    }
+
+    public void outALireE6(ALireE6 node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseALireE6(ALireE6 node)
+    {
+        inALireE6(node);
+        if(node.getElire() != null)
+        {
+            node.getElire().apply(this);
+        }
+        outALireE6(node);
+    }
+
     public void inAVarE6(AVarE6 node)
     {
         defaultIn(node);
@@ -897,6 +918,35 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getVar().apply(this);
         }
         outAVarE6(node);
+    }
+
+    public void inALireElire(ALireElire node)
+    {
+        defaultIn(node);
+    }
+
+    public void outALireElire(ALireElire node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseALireElire(ALireElire node)
+    {
+        inALireElire(node);
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getLire() != null)
+        {
+            node.getLire().apply(this);
+        }
+        outALireElire(node);
     }
 
     public void inAIaffI(AIaffI node)
@@ -962,27 +1012,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAItqI(node);
     }
 
-    public void inAIappI(AIappI node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAIappI(AIappI node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAIappI(AIappI node)
-    {
-        inAIappI(node);
-        if(node.getIapp() != null)
-        {
-            node.getIapp().apply(this);
-        }
-        outAIappI(node);
-    }
-
     public void inAIblocI(AIblocI node)
     {
         defaultIn(node);
@@ -1023,6 +1052,48 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getIret().apply(this);
         }
         outAIretI(node);
+    }
+
+    public void inAIecrI(AIecrI node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAIecrI(AIecrI node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAIecrI(AIecrI node)
+    {
+        inAIecrI(node);
+        if(node.getIecr() != null)
+        {
+            node.getIecr().apply(this);
+        }
+        outAIecrI(node);
+    }
+
+    public void inAIappI(AIappI node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAIappI(AIappI node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAIappI(AIappI node)
+    {
+        inAIappI(node);
+        if(node.getIapp() != null)
+        {
+            node.getIapp().apply(this);
+        }
+        outAIappI(node);
     }
 
     public void inALaffIaff(ALaffIaff node)
@@ -1219,6 +1290,43 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outARetIret(node);
     }
 
+    public void inAEcrIecr(AEcrIecr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAEcrIecr(AEcrIecr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAEcrIecr(AEcrIecr node)
+    {
+        inAEcrIecr(node);
+        if(node.getPvir() != null)
+        {
+            node.getPvir().apply(this);
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        if(node.getE() != null)
+        {
+            node.getE().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getEcrire() != null)
+        {
+            node.getEcrire().apply(this);
+        }
+        outAEcrIecr(node);
+    }
+
     public void inABlocIbloc(ABlocIbloc node)
     {
         defaultIn(node);
@@ -1246,6 +1354,60 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getLAcc().apply(this);
         }
         outABlocIbloc(node);
+    }
+
+    public void inAIdVar(AIdVar node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAIdVar(AIdVar node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAIdVar(AIdVar node)
+    {
+        inAIdVar(node);
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outAIdVar(node);
+    }
+
+    public void inATabVar(ATabVar node)
+    {
+        defaultIn(node);
+    }
+
+    public void outATabVar(ATabVar node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseATabVar(ATabVar node)
+    {
+        inATabVar(node);
+        if(node.getRCroc() != null)
+        {
+            node.getRCroc().apply(this);
+        }
+        if(node.getE() != null)
+        {
+            node.getE().apply(this);
+        }
+        if(node.getLCroc() != null)
+        {
+            node.getLCroc().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outATabVar(node);
     }
 
     public void inAILi(AILi node)

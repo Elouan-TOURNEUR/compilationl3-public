@@ -8,7 +8,7 @@ import sc.analysis.*;
 public final class AVarDv extends PDv
 {
     private TEntier _entier_;
-    private PVar _var_;
+    private PDvar _dvar_;
 
     public AVarDv()
     {
@@ -17,12 +17,12 @@ public final class AVarDv extends PDv
 
     public AVarDv(
         @SuppressWarnings("hiding") TEntier _entier_,
-        @SuppressWarnings("hiding") PVar _var_)
+        @SuppressWarnings("hiding") PDvar _dvar_)
     {
         // Constructor
         setEntier(_entier_);
 
-        setVar(_var_);
+        setDvar(_dvar_);
 
     }
 
@@ -31,7 +31,7 @@ public final class AVarDv extends PDv
     {
         return new AVarDv(
             cloneNode(this._entier_),
-            cloneNode(this._var_));
+            cloneNode(this._dvar_));
     }
 
     @Override
@@ -65,16 +65,16 @@ public final class AVarDv extends PDv
         this._entier_ = node;
     }
 
-    public PVar getVar()
+    public PDvar getDvar()
     {
-        return this._var_;
+        return this._dvar_;
     }
 
-    public void setVar(PVar node)
+    public void setDvar(PDvar node)
     {
-        if(this._var_ != null)
+        if(this._dvar_ != null)
         {
-            this._var_.parent(null);
+            this._dvar_.parent(null);
         }
 
         if(node != null)
@@ -87,7 +87,7 @@ public final class AVarDv extends PDv
             node.parent(this);
         }
 
-        this._var_ = node;
+        this._dvar_ = node;
     }
 
     @Override
@@ -95,7 +95,7 @@ public final class AVarDv extends PDv
     {
         return ""
             + toString(this._entier_)
-            + toString(this._var_);
+            + toString(this._dvar_);
     }
 
     @Override
@@ -108,9 +108,9 @@ public final class AVarDv extends PDv
             return;
         }
 
-        if(this._var_ == child)
+        if(this._dvar_ == child)
         {
-            this._var_ = null;
+            this._dvar_ = null;
             return;
         }
 
@@ -127,9 +127,9 @@ public final class AVarDv extends PDv
             return;
         }
 
-        if(this._var_ == oldChild)
+        if(this._dvar_ == oldChild)
         {
-            setVar((PVar) newChild);
+            setDvar((PDvar) newChild);
             return;
         }
 

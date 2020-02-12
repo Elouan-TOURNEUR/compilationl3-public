@@ -141,13 +141,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAIdVar(AIdVar node)
+    public void caseAIdDvar(AIdDvar node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseATabVar(ATabVar node)
+    public void caseATabDvar(ATabDvar node)
     {
         defaultCase(node);
     }
@@ -279,7 +279,19 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseALireE6(ALireE6 node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAVarE6(AVarE6 node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseALireElire(ALireElire node)
     {
         defaultCase(node);
     }
@@ -303,12 +315,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAIappI(AIappI node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAIblocI(AIblocI node)
     {
         defaultCase(node);
@@ -316,6 +322,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAIretI(AIretI node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAIecrI(AIecrI node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAIappI(AIappI node)
     {
         defaultCase(node);
     }
@@ -357,7 +375,25 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAEcrIecr(AEcrIecr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseABlocIbloc(ABlocIbloc node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAIdVar(AIdVar node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATabVar(ATabVar node)
     {
         defaultCase(node);
     }
@@ -520,6 +556,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTFaire(TFaire node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTEcrire(TEcrire node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTLire(TLire node)
     {
         defaultCase(node);
     }
