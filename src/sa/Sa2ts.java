@@ -5,15 +5,25 @@ import ts.*;
 public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     private Ts table;
+    private Ts tableLocaleCourante;
 
     public Sa2ts(SaNode saRoot){
         this.table = new Ts();
+
+        SaProg prog = (SaProg)saRoot;
+        SaLDec variables = prog.getVariables();
+        int lengthVar = variables.length();
+        for(int i = 0; i < lengthVar; i++){
+            SaDec variable = variables.getTete();
+            variable.accept(this);
+			variables = variables.getQueue();
+        }
 		
 		saRoot.accept(this);
     }
 	
 	public Ts getTableGlobale(){
-		this.table.affiche(System.out);
+		//this.table.affiche(System.out);
 		return table;
 	}
 
@@ -33,8 +43,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     public Void visit(SaDecFonc node){
         Ts tableLocaleFonction = new Ts();
-
-        //defaultIn(node);
 
         SaLDec parametres = node.getParametres();
 		int lengthParam = 0;
@@ -65,9 +73,9 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 			}
 		}
 
-        //node.getCorps().accept(this);
-        
-		//defaultOut(node);
+        this.tableLocaleCourante = tableLocaleFonction;
+        node.getCorps().accept(this);
+        this.tableLocaleCourante = new Ts();
 		
 		TsItemFct fonction = new TsItemFct(node.getNom(), lengthParam-2, tableLocaleFonction, node);
 		table.addFct(node.getNom(), lengthParam-2, tableLocaleFonction, node);
@@ -77,7 +85,11 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
 
     public Void visit(SaVarSimple node){
-
+		TsItemVar var = this.table.getVar(node.getNom());
+        TsItemVar varLocale = this.tableLocaleCourante.getVar(node.getNom());
+        
+        if(var == null) System.out.println(varLocale);
+        else  System.out.println(var);
         
         return null;
     }

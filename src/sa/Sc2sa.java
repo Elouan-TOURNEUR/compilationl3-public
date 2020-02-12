@@ -75,7 +75,9 @@ public class Sc2sa extends DepthFirstAdapter {
         declarations = (SaLDec) this.returnValue;
         node.getLdvo2().apply(this);
         listeDeclarations = (SaLDec) this.returnValue;
-        for (int i = 0; i < declarations.length() - 1; i++) {
+        
+        int lengthDec = declarations.length();
+        for (int i = 0; i < lengthDec; i++) {
             listeDeclarations = new SaLDec(declarations.getTete(), listeDeclarations);
             declarations = declarations.getQueue();
         }
@@ -495,7 +497,6 @@ public class Sc2sa extends DepthFirstAdapter {
     public void caseAIblocI(AIblocI node) {
         SaInstBloc instructions = null;
 
-
         node.getIbloc().apply(this);
         instructions = (SaInstBloc) this.returnValue;
         
@@ -505,7 +506,6 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseAIretI(AIretI node) {
         SaInstRetour instructionRet = null;
-
 
         node.getIret().apply(this);
         instructionRet = (SaInstRetour) this.returnValue;
