@@ -631,8 +631,6 @@ public class Sc2sa extends DepthFirstAdapter {
     public void caseAEcrIecr(AEcrIecr node) {
         SaExp expression = null;
 
-
-
         node.getE().apply(this);
         expression = (SaExp) this.returnValue;
 

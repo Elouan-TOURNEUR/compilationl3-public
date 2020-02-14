@@ -1,21 +1,9 @@
-
 entier b;
 main()
 {
-b = 100;
-tantque b  faire{
+b = 10;
+tantque 2 < b  faire{
 ecrire(b);
-b = b - 1; # b = a - 1;
+b = b - 1;
 }
 }
-
-
-#entier a;
-#main()
-#{
-#a = 100;
-#tantque a  faire{
-#ecrire(a);
-#a = a - 1;
-#}
-#}
