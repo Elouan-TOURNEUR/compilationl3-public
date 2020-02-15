@@ -1,7 +1,7 @@
 <SaProg>
  <SaLDec>
   <SaDecVar>
-   <nom>a</nom>
+   <nom>b</nom>
   </SaDecVar>
  </SaLDec>
  <SaLDec>
@@ -11,7 +11,7 @@
     <SaLInst>
      <SaInstAffect>
       <SaVarSimple>
-       <nom>a</nom>
+       <nom>b</nom>
       </SaVarSimple>
       <SaExpInt>
        <val>10</val>
@@ -25,7 +25,7 @@
         </SaExpInt>
         <SaExpVar>
          <SaVarSimple>
-          <nom>a</nom>
+          <nom>b</nom>
          </SaVarSimple>
         </SaExpVar>
        </SaExpInf>
@@ -34,19 +34,19 @@
          <SaInstEcriture>
           <SaExpVar>
            <SaVarSimple>
-            <nom>a</nom>
+            <nom>b</nom>
            </SaVarSimple>
           </SaExpVar>
          </SaInstEcriture>
          <SaLInst>
           <SaInstAffect>
            <SaVarSimple>
-            <nom>a</nom>
+            <nom>b</nom>
            </SaVarSimple>
            <SaExpSub>
             <SaExpVar>
              <SaVarSimple>
-              <nom>a</nom>
+              <nom>b</nom>
              </SaVarSimple>
             </SaExpVar>
             <SaExpInt>

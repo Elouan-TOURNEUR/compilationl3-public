@@ -64,6 +64,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAVideLdvo2(AVideLdvo2 node) {
+	this.returnValue = null;
     }
 
     @Override
@@ -76,12 +77,13 @@ public class Sc2sa extends DepthFirstAdapter {
         node.getLdvo2().apply(this);
         listeDeclarations = (SaLDec) this.returnValue;
         
-        int lengthDec = declarations.length();
-        for (int i = 0; i < lengthDec; i++) {
-            listeDeclarations = new SaLDec(declarations.getTete(), listeDeclarations);
-            declarations = declarations.getQueue();
-        }
-        this.returnValue = listeDeclarations;
+	while(listeDeclarations != null){
+		SaDec declaration = listeDeclarations.getTete();
+		declarations = new SaLDec(declaration, declarations);
+		listeDeclarations = listeDeclarations.getQueue();
+	}
+	
+        this.returnValue = declarations;
     }
 
     @Override
