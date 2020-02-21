@@ -10,10 +10,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     public Sa2ts(SaNode saRoot){
         this.table = new Ts();
         this.tableCourante = this.table;
-
-        SaProg prog = (SaProg)saRoot;
 		
-	saRoot.accept(this);
+	    saRoot.accept(this);
     }
 	
     public Ts getTableGlobale(){
@@ -77,11 +75,12 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
 
     public Void visit(SaVarSimple node){
-	TsItemVar var = this.table.getVar(node.getNom());
+	    TsItemVar var = this.table.getVar(node.getNom());
         TsItemVar varLocale = this.tableCourante.getVar(node.getNom());
         
         if((var == null) && (varLocale == null)){
             System.err.println("Erreur : Variable non déclarée");
+            System.exit(2);
             //throw new Exception("Variable non déclarer");
         }
         
@@ -95,6 +94,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         
         if((var == null) && (varLocale == null)){
             System.err.println("Erreur : Variable de tableau non déclarée");
+            System.exit(2);
             //throw new Exception("Variable non déclarer");
         }
         
@@ -107,6 +107,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         
         if(fct == null){
             System.err.println("Erreur : Fonction non déclarée");
+            System.exit(2);
             //throw new Exception("Variable non déclarer");
         }
         
