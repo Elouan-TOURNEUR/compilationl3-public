@@ -15,7 +15,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 	
     public Ts getTableGlobale(){
-    	this.table.affiche(System.out);
+    	//this.table.affiche(System.out);
     	return table;
     }
 
