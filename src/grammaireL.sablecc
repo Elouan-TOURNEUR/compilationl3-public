@@ -1,9 +1,5 @@
 Package sc;
 
-Helpers
-
-blanc = ( ' ' | 13 | 10 )*;
-
 
 Tokens
 

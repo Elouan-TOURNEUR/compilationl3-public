@@ -47,7 +47,9 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         c3a.ajouteInst(begin);
 		
 		this.tableCourante = this.table.getTableLocale(node.getNom());
-		node.getCorps().accept(this);
+        
+        if(node.getCorps() != null)
+    		node.getCorps().accept(this);
 		
 		C3aInstFEnd end = new C3aInstFEnd("fin fonction");
         c3a.ajouteInst(end);
@@ -161,7 +163,6 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     public C3aOperand visit(SaExpInf node){
 		C3aLabel label = c3a.newAutoLabel();
 		C3aOperand tmp = c3a.newTemp();
-		
 	    C3aOperand op1 = (C3aOperand)node.getOp1().accept(this);
 	    C3aOperand op2 = (C3aOperand)node.getOp2().accept(this);
 		
@@ -180,10 +181,10 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     public C3aOperand visit(SaExpEqual node){
-		C3aOperand op1 = (C3aOperand)node.getOp1().accept(this);
-	    C3aOperand op2 = (C3aOperand)node.getOp2().accept(this);
         C3aLabel label = c3a.newAutoLabel();
 		C3aOperand tmp = c3a.newTemp();
+		C3aOperand op1 = (C3aOperand)node.getOp1().accept(this);
+	    C3aOperand op2 = (C3aOperand)node.getOp2().accept(this);
 		
 		C3aInstAffect affect = new C3aInstAffect(c3a.True, tmp, "");
 		c3a.ajouteInst(affect);
@@ -200,11 +201,11 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 	
 	public C3aOperand visit(SaExpAnd node) {
-		C3aOperand op1 = (C3aOperand)node.getOp1().accept(this);
-		C3aOperand op2 = (C3aOperand)node.getOp2().accept(this);
 		C3aLabel label1 = c3a.newAutoLabel();
 		C3aLabel label2 = c3a.newAutoLabel();
 		C3aOperand tmp = c3a.newTemp();
+		C3aOperand op1 = (C3aOperand)node.getOp1().accept(this);
+		C3aOperand op2 = (C3aOperand)node.getOp2().accept(this);
 		
 		
 		
@@ -231,18 +232,18 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 	
 	
 	public C3aOperand visit(SaExpOr node) {
-		C3aOperand op1 = (C3aOperand)node.getOp1().accept(this);
-		C3aOperand op2 = (C3aOperand)node.getOp2().accept(this);
 		C3aLabel label1 = c3a.newAutoLabel();
 		C3aLabel label2 = c3a.newAutoLabel();
 		C3aOperand tmp = c3a.newTemp();
+		C3aOperand op1 = (C3aOperand)node.getOp1().accept(this);
+		C3aOperand op2 = (C3aOperand)node.getOp2().accept(this);
 		
 		
 		
 		C3aInstJumpIfNotEqual jump1 = new C3aInstJumpIfNotEqual(op1, c3a.False, label2, "");
 		C3aInstJumpIfNotEqual jump2 = new C3aInstJumpIfNotEqual(op2, c3a.False, label2, "");
-		c3a.ajouteInst(jump1);
 		c3a.ajouteInst(jump2);
+		c3a.ajouteInst(jump1);
 		
 		C3aInstAffect affect = new C3aInstAffect(c3a.False, tmp, "");
 		c3a.ajouteInst(affect);
@@ -278,7 +279,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 	
 	public C3aOperand visit(SaInstEcriture node) {
 		C3aOperand op = (C3aOperand)node.getArg().accept(this);
-		//C3aOperand result = c3a.newTemp();;
+		//C3aOperand result = c3a.newTemp();
 		C3aInstWrite write = new C3aInstWrite(op, "");//" # write");
 		
 		c3a.ajouteInst(write);

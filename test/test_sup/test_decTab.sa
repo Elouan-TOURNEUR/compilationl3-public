@@ -1,0 +1,15 @@
+<SaProg>
+ <SaLDec>
+  <SaDecTab>
+  </SaDecTab>
+ </SaLDec>
+ <SaLDec>
+  <SaDecFonc>
+   <nom>main</nom>
+   <SaLDec>
+    <SaDecTab>
+    </SaDecTab>
+   </SaLDec>
+  </SaDecFonc>
+ </SaLDec>
+</SaProg>
