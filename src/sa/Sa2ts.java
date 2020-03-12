@@ -68,12 +68,13 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 		if(variables != null){
 			variables.accept(this);
 		}
-
-		if(node.getCorps() != null)
-			node.getCorps().accept(this);        
-			
+		
 		TsItemFct fonction = new TsItemFct(node.getNom(), lengthParam, this.tableCourante, node);
 		this.table.addFct(node.getNom(), lengthParam, this.tableCourante, node);
+
+		if(node.getCorps() != null)
+			node.getCorps().accept(this);
+		
 		this.tableCourante = this.table;
 			
 		return null;
