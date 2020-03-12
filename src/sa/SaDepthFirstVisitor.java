@@ -301,7 +301,7 @@ public class SaDepthFirstVisitor <T> implements SaVisitor <T>{
     public T visit(SaInstBloc node)
     {
 	defaultIn(node);
-	node.getVal().accept(this);
+	if(node.getVal() != null) node.getVal().accept(this);
 	defaultOut(node);
 	return null;
     }

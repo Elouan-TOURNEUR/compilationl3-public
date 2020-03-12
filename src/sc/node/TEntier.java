@@ -9,12 +9,12 @@ public final class TEntier extends Token
 {
     public TEntier()
     {
-        super.setText("entier ");
+        super.setText("entier");
     }
 
     public TEntier(int line, int pos)
     {
-        super.setText("entier ");
+        super.setText("entier");
         setLine(line);
         setPos(pos);
     }

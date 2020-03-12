@@ -604,10 +604,7 @@ public class Sc2sa extends DepthFirstAdapter {
         node.getLi().apply(this);
         instructions = (SaLInst) this.returnValue;
 
-        if(instructions != null)
-            this.returnValue = new SaInstBloc(instructions);
-        else
-            this.returnValue = null;
+        this.returnValue = new SaInstBloc(instructions);
     }
 
     @Override

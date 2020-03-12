@@ -417,7 +417,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTNbr(TNbr node)
+    public void caseTCommentaire(TCommentaire node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTEspaces(TEspaces node)
     {
         defaultCase(node);
     }
@@ -430,6 +436,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTMinus(TMinus node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTNbr(TNbr node)
     {
         defaultCase(node);
     }
@@ -580,18 +592,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTId(TId node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTEspaces(TEspaces node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTCommentaire(TCommentaire node)
     {
         defaultCase(node);
     }

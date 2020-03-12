@@ -1,11 +1,18 @@
 Package sc;
 
+Helpers
+    tab   = 9;
 
 Tokens
 
-nbr = ('-')? ['0' .. '9']+;
+commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
+espaces = ( ' ' | 13 | 10 | tab )*;
+
 plus = '+';
 minus = '-';
+
+nbr = ('-')? ['0' .. '9']+;
+
 mult = '*';
 div = '/';
 inf = '<';
@@ -22,18 +29,16 @@ r_croc = ']';
 pvir = ';';
 vir = ',';
 ret = 'retour';
-si = 'si ';
+si = 'si';
 alors = ' alors';
 sinon = 'sinon';
-tantq = 'tantque ';
+tantq = 'tantque';
 faire = 'faire';
 ecrire = 'ecrire';
 lire = 'lire';
-entier = 'entier ';
-id = (['a' .. 'z']+ ['A' .. 'Z']* )+;
+entier = 'entier';
+id = (['a' .. 'z']* ['A' .. 'Z']* ['0' .. '9']* )+;
 
-espaces = ( ' ' | 13 | 10 )*;
-commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
 
 Ignored Tokens
 

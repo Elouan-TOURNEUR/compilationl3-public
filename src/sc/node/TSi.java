@@ -9,12 +9,12 @@ public final class TSi extends Token
 {
     public TSi()
     {
-        super.setText("si ");
+        super.setText("si");
     }
 
     public TSi(int line, int pos)
     {
-        super.setText("si ");
+        super.setText("si");
         setLine(line);
         setPos(pos);
     }

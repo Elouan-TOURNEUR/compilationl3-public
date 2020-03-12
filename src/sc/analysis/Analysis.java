@@ -70,9 +70,11 @@ public interface Analysis extends Switch
     void caseAVideLi(AVideLi node);
     void caseAFctApp(AFctApp node);
 
-    void caseTNbr(TNbr node);
+    void caseTCommentaire(TCommentaire node);
+    void caseTEspaces(TEspaces node);
     void caseTPlus(TPlus node);
     void caseTMinus(TMinus node);
+    void caseTNbr(TNbr node);
     void caseTMult(TMult node);
     void caseTDiv(TDiv node);
     void caseTInf(TInf node);
@@ -98,8 +100,6 @@ public interface Analysis extends Switch
     void caseTLire(TLire node);
     void caseTEntier(TEntier node);
     void caseTId(TId node);
-    void caseTEspaces(TEspaces node);
-    void caseTCommentaire(TCommentaire node);
     void caseEOF(EOF node);
     void caseInvalidToken(InvalidToken node);
 }

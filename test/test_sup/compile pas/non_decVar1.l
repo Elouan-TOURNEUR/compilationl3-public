@@ -1,6 +1,6 @@
 entier var;
-main()
-entier var;
-{
 
+main()
+{
+    ecrire(v);
 }
