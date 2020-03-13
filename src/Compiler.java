@@ -5,7 +5,7 @@ import java.io.*;
 import sa.*;
 import ts.*;
 import c3a.*;
-//import nasm.*;
+import nasm.*;
 //import fg.*;
 
 public class Compiler
@@ -49,11 +49,11 @@ public class Compiler
 	    C3a c3a = new Sa2c3a(saRoot, table).getC3a();
 	    c3a.affiche(baseName);
 
-	    /*System.out.println("[NASM]");
+	    System.out.println("[NASM]");
 	    Nasm nasm = new C3a2nasm(c3a, table).getNasm();
 	    nasm.affiche(baseName);
 
-	    System.out.println("[FLOW GRAPH]");
+	    /*System.out.println("[FLOW GRAPH]");
 	    Fg fg = new Fg(nasm);
 	    fg.affiche(baseName);
 
