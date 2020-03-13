@@ -1,9 +1,9 @@
-entier b;
+entier a;
 main()
 {
-b = 10;
-tantque 2 < b  faire{
-ecrire(b);
-b = b - 1;
+a = 10;
+tantque 2 < a  faire{
+ecrire(a);
+a = a - 1;
 }
 }
