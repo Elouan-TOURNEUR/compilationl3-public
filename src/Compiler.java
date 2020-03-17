@@ -27,37 +27,49 @@ public class Compiler
 	    e.printStackTrace();
 	} 
 	try {
-	    // Create a Parser instance.
+		// Create a Parser instance.
 	    Parser p = new Parser(new Lexer(br));
 	    // Parse the input.
+	    System.out.print("[BUILD SC] ");
 	    Start tree = p.parse();
 	    
-	    System.out.println("[SC]");
+	    System.out.println("[PRINT SC]");
 	    tree.apply(new Sc2Xml(baseName));
 
-	    System.out.println("[SA]");
+	    System.out.print("[BUILD SA] ");
 	    Sc2sa sc2sa = new Sc2sa();
 	    tree.apply(sc2sa);
 	    SaNode saRoot = sc2sa.getRoot();
+
+	    System.out.println("[PRINT SA]");
 	    new Sa2Xml(saRoot, baseName);
 		    
-	    System.out.println("[TS]");
+	    System.out.print("[BUILD TS] ");
 	    Ts table = new Sa2ts(saRoot).getTableGlobale();
+
+	    System.out.println("[PRINT TS]");
 	    table.afficheTout(baseName);
 
-	    System.out.println("[C3A]");
+	    System.out.print("[BUILD C3A]");
 	    C3a c3a = new Sa2c3a(saRoot, table).getC3a();
+
+	    System.out.print("[PRINT C3A] ");
 	    c3a.affiche(baseName);
 
-	    System.out.println("[NASM]");
+	    System.out.println("[PRINT C3A OUT]");
+	    C3aEval c3aEval = new C3aEval(c3a, table);
+	    c3aEval.affiche(baseName);
+	    
+	    System.out.print("[BUILD PRE NASM] ");
 	    Nasm nasm = new C3a2nasm(c3a, table).getNasm();
-	    nasm.affiche(baseName);
+	    System.out.println("[PRINT PRE NASM] ");
+	    nasm.affichePre(baseName);
 
-	    /*System.out.println("[FLOW GRAPH]");
+	    /*System.out.print("[BUILD FG] ");
 	    Fg fg = new Fg(nasm);
+	    System.out.print("[PRINT FG] ");
 	    fg.affiche(baseName);
-
-	    System.out.println("[FLOW GRAPH SOLVE]");
+	    System.out.println("[SOLVE FG]");
 	    FgSolution fgSolution = new FgSolution(nasm, fg);
 	    fgSolution.affiche(baseName);*/
 	    
