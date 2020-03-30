@@ -1,5 +1,7 @@
 package nasm;
 
+import java.util.Objects;
+
 public class NasmRegister extends NasmOperand {
     public int val;
     public int color = Nasm.REG_UNK;
@@ -29,5 +31,20 @@ public class NasmRegister extends NasmOperand {
     
     public <T> T accept(NasmVisitor <T> visitor) {
         return visitor.visit(this);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NasmRegister that = (NasmRegister) o;
+        return val == that.val &&
+                color == that.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(val, color);
     }
 }
