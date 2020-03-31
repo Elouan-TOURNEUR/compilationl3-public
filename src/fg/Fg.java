@@ -10,10 +10,10 @@ public class Fg implements NasmVisitor <Void> {
     public Nasm nasm;
     public Graph graph;
     private FgSolution fgs;
-    Map<NasmInst, Node> inst2Node;
+    public Map<NasmInst, Node> inst2Node;
     Map<Node, NasmInst> node2Inst;
     Map<String, NasmInst> label2Inst;
-    Map<NasmRegister, Integer> temp2Num;
+    public Map<NasmRegister, Integer> temp2Num;
 
     private boolean firstCourse;
     private boolean construction;
@@ -172,16 +172,13 @@ public class Fg implements NasmVisitor <Void> {
                 temp = this.counter++;
             }
 
-            this.temp2Num.put((NasmRegister) inst.destination, temp);
+            this.temp2Num.put(new NasmRegister((NasmRegister) operand), temp);
             fgs.def.get(inst).add(temp);
         }
     }
 
     private void computeUse(NasmInst inst, NasmOperand operand){
         if((operand instanceof NasmRegister) && (((NasmRegister) operand).color != Nasm.REG_ESP) && (((NasmRegister) operand).color != Nasm.REG_EBP)){
-            //if(operand.isGeneralRegister())
-            //    this.computeDef(inst, operand);
-
             int temp = this.temp2Num.get(operand);
             fgs.use.get(inst).add(temp);
         }
@@ -500,6 +497,7 @@ public class Fg implements NasmVisitor <Void> {
             if(this.firstCourse){
                 this.initMapFgs(inst);
                 this.computeDef(inst, inst.destination);
+                //this.computeUse(inst, inst.destination);
                 this.computeUse(inst, inst.source);
             } else {
                 this.computeInOut(inst);

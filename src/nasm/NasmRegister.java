@@ -6,6 +6,11 @@ public class NasmRegister extends NasmOperand {
     public int val;
     public int color = Nasm.REG_UNK;
 
+    public NasmRegister(NasmRegister register){
+        this.val = register.val;
+        this.color = register.color;
+    }
+
     public NasmRegister(int val){
 	this.val = val;
     }
