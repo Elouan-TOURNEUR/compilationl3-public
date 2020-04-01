@@ -174,6 +174,9 @@ public class Fg implements NasmVisitor <Void> {
 
             this.temp2Num.put(new NasmRegister((NasmRegister) operand), temp);
             fgs.def.get(inst).add(temp);
+        } else if(operand instanceof  NasmAddress){
+            this.computeUse(inst, ((NasmAddress) operand).base);
+            this.computeUse(inst, ((NasmAddress) operand).offset);
         }
     }
 
@@ -181,10 +184,11 @@ public class Fg implements NasmVisitor <Void> {
         if((operand instanceof NasmRegister) && (((NasmRegister) operand).color != Nasm.REG_ESP) && (((NasmRegister) operand).color != Nasm.REG_EBP)){
             int temp = this.temp2Num.get(operand);
             fgs.use.get(inst).add(temp);
+        } else if(operand instanceof  NasmAddress){
+            this.computeUse(inst, ((NasmAddress) operand).base);
+            this.computeUse(inst, ((NasmAddress) operand).offset);
         }
     }
-
-
 
 
 

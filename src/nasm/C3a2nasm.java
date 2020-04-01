@@ -7,18 +7,6 @@ import sa.*;
 import ts.*;
 
 
-
-/*
- * TODO :
- * - Mettre les commentaire pour chaque instructions (voir pre-nasm)
- * - Faire les autres Jump
- * - Voir à quoi sert les instructions nasm non-utilisées (NasmXor, NasmEmpty, NasmOr, ...)
- * - Valider tous les tests
- */
-
-
-
-
 public class C3a2nasm implements C3aVisitor <NasmOperand> {
     private C3a c3a;
     private Nasm nasm;
@@ -38,8 +26,6 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
         for(C3aInst inst : insts) {
         	inst.accept(this);
         }
-        
-        
     }
     
     private void init() {
@@ -200,8 +186,7 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
 			NasmConstant n = new NasmConstant(nb);
 			nasm.ajouteInst(new NasmAdd(null, esp, n, "désallocation des arguments"));
 		}
-		
-		
+
 		return res;
 	}
 
@@ -237,7 +222,20 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
 
 	@Override
 	public NasmOperand visit(C3aInstRead inst) {
-		// TODO Auto-generated method stub
+		NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
+
+		NasmOperand sinput = new NasmLabel("sinput");
+		NasmOperand realine = new NasmLabel("readline");
+		NasmOperand atoi = new NasmLabel("atoi");
+		NasmRegister reg = nasm.newRegister();
+		NasmRegister eax = nasm.newRegister();
+		eax.colorRegister(Nasm.REG_EAX);
+
+		nasm.ajouteInst(new NasmMov(label, eax, sinput, ""));
+		nasm.ajouteInst(new NasmCall(null, realine, ""));
+		nasm.ajouteInst(new NasmCall(null, atoi, ""));
+		nasm.ajouteInst(new NasmMov(null, reg, eax, ""));
+
 		return null;
 	}
 
@@ -393,8 +391,6 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
 	public NasmOperand visit(C3aFunction oper) {
 		return new NasmLabel(oper.val.identif);
 	}
-
-
 }
 
 

@@ -15,7 +15,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 	
     public Ts getTableGlobale(){
-    	//this.table.affiche(System.out);
     	return table;
     }
 
@@ -27,7 +26,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 		}
 		
 		this.tableCourante.addVar(node.getNom(), 1);
-
         return null;
     }
 
@@ -38,7 +36,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 		}
 		
 		this.tableCourante.addVar(node.getNom(), node.getTaille());
-		
         return null;
     }
 
@@ -69,14 +66,13 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 			variables.accept(this);
 		}
 		
-		TsItemFct fonction = new TsItemFct(node.getNom(), lengthParam, this.tableCourante, node);
+		//TsItemFct fonction = new TsItemFct(node.getNom(), lengthParam, this.tableCourante, node);
 		this.table.addFct(node.getNom(), lengthParam, this.tableCourante, node);
 
 		if(node.getCorps() != null)
 			node.getCorps().accept(this);
 		
 		this.tableCourante = this.table;
-			
 		return null;
     }
 
@@ -88,9 +84,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         if((var == null) && (varLocale == null)){
             System.err.println("Erreur : Variable " + node.getNom() + " non déclarée");
             System.exit(2);
-            //throw new Exception("Variable non déclarer");
         }
-        
         return null;
     }
 
@@ -102,9 +96,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         if((var == null) && (varLocale == null)){
             System.err.println("Erreur : Tableau " + node.getNom() + " non déclarée");
             System.exit(2);
-            //throw new Exception("Variable non déclarer");
         }
-        
         return null;
     }
 
@@ -115,7 +107,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         if(fct == null){
             System.err.println("Erreur : Fonction " + node.getNom() + " non déclarée");
             System.exit(2);
-            //throw new Exception("Variable non déclarer");
         }
 		
 		int nbArguments = fct.getNbArgs();
@@ -124,22 +115,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 		if(nbArguments != appelNbArguments){
             System.err.println("Erreur : Appel de la fonction " + node.getNom() + " avec " + appelNbArguments + " argument(s) au lieu de " + nbArguments);
             System.exit(2);
-            //throw new Exception("Variable non déclarer");
         }
-        
 		return null;
     }
-	
-	
-	// TODO : verifier type ?
-	public Void visit(SaExpAdd node){
-		defaultIn(node);
-		node.getOp1().accept(this);
-		node.getOp2().accept(this);
-		defaultOut(node);
-		
-		return null;
-    }
-
 }
 

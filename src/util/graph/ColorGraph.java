@@ -22,15 +22,13 @@ public class ColorGraph {
         this.K       = K;
         pile         = new Stack<Integer>();
         nbPreColored = 0;
-        this.R            = R;//G.nodeCount();
+        this.R       = R;//G.nodeCount();
         couleur      = new int[R];
         enleves      = new IntSet(R);
         deborde        = new IntSet(R);
         int2Node     = G.nodeArray();
         for(int v=0; v < R; v++){
             int preColor = phi[v];
-            System.out.println("OK");
-            System.out.println(preColor);
             if(preColor >= 0 && preColor < K) {
                 couleur[v] = phi[v];
                 nbPreColored++;

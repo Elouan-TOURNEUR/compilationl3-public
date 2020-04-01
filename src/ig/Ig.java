@@ -29,41 +29,30 @@ public class Ig {
 		this.allocateRegisters();
 	}
 
-	public void construction(){
 
+	private void generateNOEdge(Collection<IntSet> sets){
+		for(IntSet inSet : sets){
+			if(!inSet.isEmpty()){
+				for(int i = 0; i < inSet.getSize()-1; i++){
+					if(inSet.isMember(i)){
+						for(int j = i+1; j < inSet.getSize(); j++){
+							if(inSet.isMember(j)){
+								this.graph.addNOEdge(int2Node[i], int2Node[j]);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	public void construction(){
 		for(int i = 0; i < regNb; i++)
 			int2Node[i] = this.graph.newNode();
 
-		/* IN */
-		for(IntSet inSet : fgs.in.values()){
-			if(!inSet.isEmpty()){
-				for(int i = 0; i < inSet.getSize()-1; i++){
-					if(inSet.isMember(i)){
-						for(int j = i+1; j < inSet.getSize(); j++){
-							if(inSet.isMember(j)){
-								this.graph.addNOEdge(int2Node[i], int2Node[j]);
-							}
-						}
-					}
-				}
-			}
-		}
-
-		/* OUT */
-		for(IntSet inSet : fgs.out.values()){
-			if(!inSet.isEmpty()){
-				for(int i = 0; i < inSet.getSize()-1; i++){
-					if(inSet.isMember(i)){
-						for(int j = i+1; j < inSet.getSize(); j++){
-							if(inSet.isMember(j)){
-								this.graph.addNOEdge(int2Node[i], int2Node[j]);
-							}
-						}
-					}
-				}
-			}
-		}
-
+		generateNOEdge(fgs.in.values());
+		generateNOEdge(fgs.out.values());
 	}
 
 	public int[] getPrecoloredTemporaries() {
@@ -85,9 +74,20 @@ public class Ig {
 				if(reg.equals(inst.source)){
 					((NasmRegister) inst.source).colorRegister(colorGraph.couleur[fgs.fg.temp2Num.get(reg)]);
 				}
-				/*if(reg.equals(inst.address)){
-						((NasmRegister) inst.address).colorRegister(colorGraph.couleur[fgs.fg.temp2Num.get(reg)]);
-				}*/
+
+				if((inst.source instanceof NasmAddress) && (reg.equals(((NasmAddress) inst.source).base))){
+					((NasmRegister) ((NasmAddress) inst.source).base).colorRegister(colorGraph.couleur[fgs.fg.temp2Num.get(reg)]);
+				}
+				if((inst.source instanceof NasmAddress) && (reg.equals(((NasmAddress) inst.source).offset))){
+					((NasmRegister) ((NasmAddress) inst.source).offset).colorRegister(colorGraph.couleur[fgs.fg.temp2Num.get(reg)]);
+				}
+
+				if((inst.destination instanceof NasmAddress) && (reg.equals(((NasmAddress) inst.destination).base))){
+					((NasmRegister) ((NasmAddress) inst.destination).base).colorRegister(colorGraph.couleur[fgs.fg.temp2Num.get(reg)]);
+				}
+				if((inst.destination instanceof NasmAddress) && (reg.equals(((NasmAddress) inst.destination).offset))){
+					((NasmRegister) ((NasmAddress) inst.destination).offset).colorRegister(colorGraph.couleur[fgs.fg.temp2Num.get(reg)]);
+				}
 			}
 		}
 	}
