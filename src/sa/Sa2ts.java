@@ -97,6 +97,9 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
             System.err.println("Erreur : Tableau " + node.getNom() + " non déclarée");
             System.exit(2);
         }
+
+        node.getIndice().accept(this);
+
         return null;
     }
 

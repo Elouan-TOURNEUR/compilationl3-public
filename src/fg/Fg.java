@@ -334,6 +334,7 @@ public class Fg implements NasmVisitor <Void> {
             if(this.firstCourse) {
                 this.initMapFgs(inst);
                 this.computeUse(inst, inst.destination);
+                this.computeUse(inst, inst.source);
             } else{
                 this.computeInOut(inst);
             }

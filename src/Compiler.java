@@ -70,16 +70,16 @@ public class Compiler
 
 			System.out.print("[BUILD FG] ");
 			Fg fg = new Fg(nasm);
-			System.out.print("[PRINT FG] ");
-			fg.affiche(baseName);
+			//System.out.print("[PRINT FG] ");
+			//fg.affiche(baseName);
 			System.out.println("[SOLVE FG]");
 			FgSolution fgSolution = fg.getFgs();
-			fgSolution.affiche(baseName);
+			//fgSolution.affiche(baseName);
 
 			System.out.print("[BUILD IG] ");
 			Ig ig = new Ig(fgSolution);
-			//System.out.println("[PRINT IG] ");
-			//ig.affiche(baseName);
+			/*System.out.println("[PRINT IG] ");
+			ig.affiche(baseName);*/
 
 			System.out.println("[PRINT NASM FINAL] ");
 			nasm.affiche(baseName);
