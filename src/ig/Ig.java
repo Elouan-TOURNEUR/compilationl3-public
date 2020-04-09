@@ -16,7 +16,7 @@ public class Ig {
 	private ColorGraph colorGraph;
 
 
-	public Ig(FgSolution fgs){
+	public Ig(FgSolution fgs, int nbRegisters){
 		this.fgs = fgs;
 		this.graph = new Graph();
 		this.nasm = fgs.nasm;
@@ -24,9 +24,9 @@ public class Ig {
 		this.int2Node = new Node[regNb];
 
 		this.construction();
-		colorGraph = new ColorGraph(this.graph, 4, this.getPrecoloredTemporaries(), fgs.fg.temp2Num.keySet().size());
+		colorGraph = new ColorGraph(this.graph, nbRegisters, this.getPrecoloredTemporaries(), fgs.fg.temp2Num.keySet().size());
 		colorGraph.coloration();
-		this.allocateRegisters();
+		//this.allocateRegisters();
 	}
 
 
