@@ -78,13 +78,21 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
 
     public Void visit(SaVarSimple node){
-	    TsItemVar var = this.table.getVar(node.getNom());
+	TsItemVar var = this.table.getVar(node.getNom());
         TsItemVar varLocale = this.tableCourante.getVar(node.getNom());
         
         if((var == null) && (varLocale == null)){
             System.err.println("Erreur : Variable " + node.getNom() + " non déclarée");
             System.exit(2);
         }
+
+	var = (var!=null) ? var : varLocale; 
+
+	if((var != null) && (var.getTaille() > 1)){
+            System.err.println("Erreur : Indice de tableau manquant sur " + node.getNom());
+            System.exit(2);
+	}
+
         return null;
     }
 

@@ -47,11 +47,9 @@ public class C3a{
 	public void addLabelToNextInst(C3aLabel label){
 		if(this.nextLabel != null){
 			//System.err.println("WARNING : Étiquette précédente ignorée " + this.nextLabel.getNumber());
-			C3aInst last = this.listeInst.remove(this.listeInst.size()-1);
 			C3aInst inst = new C3aInst();
 			inst.setLabel(this.nextLabel);
 			this.listeInst.add(inst);
-			this.listeInst.add(last);
 		}
 
 		this.nextLabel = label;

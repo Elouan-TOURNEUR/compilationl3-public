@@ -402,7 +402,7 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
         	adr = new NasmConstant(oper.item.adresse+1);
         	signe = '-';
         }else if(oper.item.isParam) {
-        	adr = new NasmConstant(currentFct.getNbArgs()*2-oper.item.adresse-1);
+        	adr = new NasmConstant(2+currentFct.getNbArgs()-oper.item.adresse);
         	signe = '+';
         } else {
         	var = new NasmLabel(oper.item.getIdentif());
